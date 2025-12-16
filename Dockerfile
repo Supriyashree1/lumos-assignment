@@ -1,14 +1,11 @@
 # Stage 1: Build the app using Maven
 FROM maven:3.9.3-eclipse-temurin-17 AS build
-
-# Set working directory
 WORKDIR /app
 
-# Copy project files
-COPY pom.xml .
-COPY src ./src
+# Copy all files
+COPY . .
 
-# Build the Spring Boot application (skip tests for faster build)
+# Build Spring Boot JAR
 RUN mvn clean package -DskipTests
 
 # Stage 2: Run the app using a smaller Java runtime
@@ -26,3 +23,4 @@ EXPOSE $PORT
 
 # Run the application
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
