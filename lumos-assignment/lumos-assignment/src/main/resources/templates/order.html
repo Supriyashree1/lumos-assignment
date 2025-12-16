@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Place Order</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #f7971e, #ffd200);
+            display: flex;
+            justify-content: center;
+            padding-top: 50px;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            width: 450px;
+        }
+        h2 {
+            color: #f7971e;
+            text-align: center;
+        }
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 12px 25px;
+            border: none;
+            background-color: #f7971e;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            display: block;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #ff6700;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #f7971e;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f7971e;
+            color: white;
+        }
+        p {
+            color: green;
+            margin-top: 10px;
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #f7971e;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Place Order</h2>
+    <form th:action="@{/order}" method="post">
+        <input type="text" name="dishName" placeholder="Dish Name" required/><br/>
+        <input type="number" name="quantity" placeholder="Quantity" min="1" required/><br/>
+        <button type="submit">Order</button>
+    </form>
+    <p th:text="${message}"></p>
+
+    <h3>Your Orders</h3>
+    <table>
+        <tr>
+            <th>Dish</th>
+            <th>Quantity</th>
+        </tr>
+        <tr th:each="o : ${orders}">
+            <td th:text="${o.dishName}"></td>
+            <td th:text="${o.quantity}"></td>
+        </tr>
+    </table>
+
+    <a th:href="@{/logout}">Logout</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+</head>
+<body>
+<h2>Login</h2>
+<form id="loginForm">
+    Username: <input type="text" id="username" /><br/>
+    Password: <input type="password" id="password" /><br/>
+    <button type="button" onclick="login()">Login</button>
+</form>
+<div id="message"></div>
+
+<script>
+    function login() {
+        fetch('/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                username: document.getElementById('username').value,
+                password: document.getElementById('password').value
+            })
+        }).then(res => res.json())
+          .then(data => {
+              document.getElementById('message').innerText = data.status;
+              if(data.status === 'success') window.location.href = '/order';
+          });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Place Order</title>
+</head>
+<body>
+<h2>Place Order</h2>
+<form id="orderForm">
+    Dish ID: <input type="text" id="dishId"/><br/>
+    Quantity: <input type="text" id="quantity"/><br/>
+    <button type="button" onclick="placeOrder()">Order</button>
+</form>
+<div id="orderMessage"></div>
+
+<script>
+    function placeOrder() {
+        fetch('/api/order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                userId: 1,
+                dishId: document.getElementById('dishId').value,
+                quantity: document.getElementById('quantity').value
+            })
+        }).then(res => res.json())
+          .then(data => document.getElementById('orderMessage').innerText = data.status);
+    }
+</script>
+</body>
+</html>

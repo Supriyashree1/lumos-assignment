@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lumos Food Ordering</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ffecd2, #fcb69f);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            width: 350px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #ff6b35;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #e85c2b;
+        }
+
+        #result {
+            margin-top: 15px;
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>🍔 Food Order</h2>
+
+    <input type="text" id="itemName" placeholder="Food Item">
+    <input type="number" id="quantity" placeholder="Quantity">
+
+    <button onclick="placeOrder()">Place Order</button>
+
+    <p id="result"></p>
+</div>
+
+<script>
+    function placeOrder() {
+        const order = {
+            itemName: document.getElementById("itemName").value,
+            quantity: document.getElementById("quantity").value
+        };
+
+        fetch("http://localhost:8080/api/orders", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(order)
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("result").innerText =
+                "Order placed successfully! Order ID: " + data.id;
+        })
+        .catch(error => {
+            document.getElementById("result").innerText = "Error placing order";
+        });
+    }
+</script>
+
+</body>
+</html>
